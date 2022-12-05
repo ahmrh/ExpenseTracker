@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="background">#f6f6fc</color>
+  <color name="mainFont">#243453</color>
+  <color name="secondaryFont">#4f5e79</color>
+  <color name="ternaryFont">#b6bacc</color>
+  <color name="mainBlue">#10a5f9</color>
+  <color name="mainRed">#ff5b5b</color>
+  <color name="mainGreen">#2cc581</color>
+
+  <color name="black">#FF000000</color>
+  <color name="white">#FFFFFFFF</color>
+</resources>
