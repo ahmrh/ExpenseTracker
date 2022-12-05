@@ -4,9 +4,107 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-  <TextView
-    android:id="@+id/textView2"
+  <RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Expenses Page" />
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <androidx.cardview.widget.CardView
+      android:id="@+id/cvTotal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="10dp"
+      android:layout_marginTop="10dp"
+      android:layout_marginEnd="10dp"
+      android:layout_marginBottom="10dp"
+      app:cardBackgroundColor="@android:color/white"
+      app:cardCornerRadius="10dp"
+      app:cardElevation="5dp"
+      app:contentPadding="16dp">
+
+      <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tvTitle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentStart="true"
+          android:layout_alignParentTop="true"
+          android:layout_centerInParent="true"
+          android:text="Total pengeluaran kamu"
+          android:textColor="@color/black"
+          android:textSize="14sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tvTotal"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/tvTitle"
+          android:layout_marginTop="4dp"
+          android:text="Rp -"
+          android:textColor="@color/black"
+          android:textSize="18sp"
+          android:textStyle="bold" />
+
+      </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rvListData"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@id/cvTotal"
+      android:layout_marginTop="35dp"
+      android:layout_marginBottom="80dp" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/fabAdd"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentBottom="true"
+      android:layout_marginEnd="16dp"
+      android:layout_marginBottom="111dp"
+      android:src="@drawable/ic_baseline_category_24"
+      app:fabSize="normal" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/fabHome"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentBottom="true"
+      android:layout_marginEnd="280dp"
+      android:layout_marginBottom="14dp"
+      android:src="@drawable/ic_baseline_category_24"
+      app:fabSize="normal" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/fabPayments"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentBottom="true"
+      android:layout_marginEnd="179dp"
+      android:layout_marginBottom="14dp"
+      android:src="@drawable/ic_baseline_category_24"
+      app:fabSize="normal" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/fabCategory"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentBottom="true"
+      android:layout_marginEnd="78dp"
+      android:layout_marginBottom="13dp"
+      android:src="@drawable/ic_baseline_category_24"
+      app:fabSize="normal" />
+
+  </RelativeLayout>
 </ScrollView>

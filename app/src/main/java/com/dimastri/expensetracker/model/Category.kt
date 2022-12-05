@@ -4,6 +4,8 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class ExpenseCategory(
+data class Category(
   var name: String,
+  var image: Int,
+  var expense: List<Expense>
 ): Parcelable
