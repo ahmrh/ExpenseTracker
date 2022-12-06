@@ -8,7 +8,7 @@ import java.util.Date
 data class Expense(
   var title: String,
   var nominal: Int,
-  var description: String,
+  var description: String?,
   var category: String,
   var date: Date
 ):Parcelable

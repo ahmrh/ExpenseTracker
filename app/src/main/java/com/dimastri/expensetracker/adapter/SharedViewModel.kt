@@ -47,7 +47,7 @@ class SharedViewModel : ViewModel() {
     return _listCategory.value?.find { it.name == name }
   }
 
-  fun createNewExpenses(title: String, nominal: Int, description: String, category: String, date: Date) {
+  fun createNewExpenses(title: String, nominal: Int, description: String?, category: String, date: Date) {
     val ca = getCategoryByName(category)
 
     if (ca != null) {

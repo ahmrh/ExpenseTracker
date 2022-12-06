@@ -4,13 +4,14 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
-import com.dimastri.expensetracker.FragmentCategory
-import com.dimastri.expensetracker.FragmentExpenses
-import com.dimastri.expensetracker.FragmentHome
+import com.dimastri.expensetracker.fragment.FragmentCategory
+import com.dimastri.expensetracker.fragment.FragmentExpenses
+import com.dimastri.expensetracker.fragment.FragmentHome
 import com.dimastri.expensetracker.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomePageActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
