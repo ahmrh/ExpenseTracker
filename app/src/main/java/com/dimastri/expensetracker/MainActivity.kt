@@ -1,5 +1,6 @@
 package com.dimastri.expensetracker
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.dimastri.expensetracker.databinding.ActivityMainBinding
@@ -18,31 +20,17 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    WindowCompat.setDecorFitsSystemWindows(window, false)
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_main)
+    setContentView(R.layout.launch_screen)
 
-    val bottonNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-    val homePage = FragmentHome()
-    val expensesPage = FragmentExpenses()
-    val categoryPage = FragmentCategory()
+    supportActionBar?.hide()
 
-    setActiveFragment(homePage)
+    val btnMulai = findViewById<Button>(R.id.btnMulai)
 
-    bottonNavigationView.setOnItemSelectedListener {
-      when (it.itemId) {
-        R.id.home -> setActiveFragment(homePage)
-        R.id.expense -> setActiveFragment(expensesPage)
-        R.id.category -> setActiveFragment(categoryPage)
-      }
-      true
-    }
-  }
-
-  fun setActiveFragment(fragment: Fragment) {
-    supportFragmentManager.beginTransaction().apply {
-      replace(R.id.fragment, fragment)
-      commit()
+    btnMulai.setOnClickListener {
+      val intent = Intent(this, HomePageActivity::class.java)
+      startActivity(intent)
+      finish()
     }
   }
 }

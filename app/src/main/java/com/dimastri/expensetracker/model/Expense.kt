@@ -8,6 +8,6 @@ import java.util.Date
 data class Expense(
   var nominal: Int,
   var description: String,
-  var category: Category,
+  var category: String,
   var date: Date
 ):Parcelable
