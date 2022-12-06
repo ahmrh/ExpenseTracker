@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,8 +33,11 @@ class FragmentCategory () : Fragment(R.layout.fragment_category) {
     btnAdd.setOnClickListener {
       val category = Category("Tambahan Kategori", R.drawable.ic_baseline_category_24, ArrayList<Expense>())
       categoryViewModel.addCategory(category)
-      listCategoryAdapter.notifyDataSetChanged()
     }
+
+    categoryViewModel.lvListCategory.observe(viewLifecycleOwner, Observer {
+      listCategoryAdapter.notifyDataSetChanged()
+    })
 
     return view
   }
