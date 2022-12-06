@@ -1,4 +1,4 @@
-package com.dimastri.expensetracker.adapter.category
+package com.dimastri.expensetracker.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -27,8 +27,8 @@ class ListCategoryAdapter(var listCategory: LiveData<List<Category>>): RecyclerV
         holder.tvName.text = category?.name
         holder.ivImage.setImageResource(category?.image!!)
 
-        val amount = category.expense.count().toString()
-        holder.tvAmount.text = "$amount items"
+        val amount = category.count.toString()
+        holder.tvAmount.text = "Total Rp. $amount"
     }
 
     override fun getItemCount(): Int {

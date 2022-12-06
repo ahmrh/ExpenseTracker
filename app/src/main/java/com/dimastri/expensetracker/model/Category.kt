@@ -7,5 +7,5 @@ import kotlinx.android.parcel.Parcelize
 data class Category(
   var name: String,
   var image: Int,
-  var expense: ArrayList<Expense>
+  var count: Int,
 ): Parcelable

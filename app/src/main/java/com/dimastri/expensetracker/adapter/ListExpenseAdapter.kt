@@ -1,4 +1,4 @@
-package com.dimastri.expensetracker.adapter.expense
+package com.dimastri.expensetracker.adapter
 
 import android.view.LayoutInflater
 import android.view.View
