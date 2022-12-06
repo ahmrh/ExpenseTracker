@@ -8,6 +8,18 @@
   <color name="mainRed">#ff5b5b</color>
   <color name="mainGreen">#2cc581</color>
 
+  <!--  color in figma-->
+  <color name="primary">#D5BBFA</color>
+  <color name="onPrimary">#3A255A</color>
+  <color name="primaryContainer">#513C72</color>
+  <color name="onPrimaryContainer">#ECDCFF</color>
+
+  <color name="secondary">#CDC3D4</color>
+  <color name="onSecondary">#342E3B</color>
+  <color name="secondaryContainer">#4A4452</color>
+  <color name="onSecondaryContainer">#E9DFF1</color>
+
+
   <color name="black">#FF000000</color>
   <color name="white">#FFFFFFFF</color>
 </resources>
