@@ -8,8 +8,10 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.dimastri.expensetracker.R
 import com.dimastri.expensetracker.model.Expense
+import com.dimastri.expensetracker.tools.CustomFormatter
 
 class ListExpenseAdapter(var listExpense: LiveData<List<Expense>>): RecyclerView.Adapter<ListExpenseAdapter.ListExpenseViewHolder>() {
+
     inner class ListExpenseViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var tvTitle: TextView = itemView.findViewById(R.id.textTitle)
         var tvAmount: TextView = itemView.findViewById(R.id.textAmount)
@@ -25,9 +27,9 @@ class ListExpenseAdapter(var listExpense: LiveData<List<Expense>>): RecyclerView
     override fun onBindViewHolder(holder: ListExpenseViewHolder, position: Int) {
         val expense = listExpense.value?.get(position)
         holder.tvTitle.text = expense?.title
-        holder.tvAmount.text = expense?.nominal.toString()
-        holder.tvDate.text = expense?.date.toString()
-        holder.tvCategory.text = expense?.category
+        holder.tvAmount.text = CustomFormatter().formatCurrency(expense?.nominal!!)
+        holder.tvDate.text = expense.date.let { CustomFormatter().formatDate(it) }
+        holder.tvCategory.text = expense.category
     }
 
     override fun getItemCount(): Int {

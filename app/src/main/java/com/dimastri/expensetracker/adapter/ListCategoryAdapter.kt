@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.dimastri.expensetracker.R
 import com.dimastri.expensetracker.model.Category
+import com.dimastri.expensetracker.tools.CustomFormatter
 
 class ListCategoryAdapter(var listCategory: LiveData<List<Category>>): RecyclerView.Adapter<ListCategoryAdapter.ListCategoryViewHolder>() {
     inner class ListCategoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -27,8 +28,8 @@ class ListCategoryAdapter(var listCategory: LiveData<List<Category>>): RecyclerV
         holder.tvName.text = category?.name
         holder.ivImage.setImageResource(category?.image!!)
 
-        val amount = category.count.toString()
-        holder.tvAmount.text = "Total Rp. $amount"
+        val amount = CustomFormatter().formatCurrency(category.count)
+        holder.tvAmount.text = amount
     }
 
     override fun getItemCount(): Int {

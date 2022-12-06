@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.dimastri.expensetracker.R
+import com.dimastri.expensetracker.tools.CustomFormatter
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
@@ -21,6 +22,7 @@ class AddExpenseActivity: AppCompatActivity() {
   lateinit var inputCategory: TextInputLayout
   lateinit var buttonSave: Button
   lateinit var selectedDate: Date
+  val customFormatter: CustomFormatter = CustomFormatter()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -63,8 +65,7 @@ class AddExpenseActivity: AppCompatActivity() {
 
     datePicker.addOnPositiveButtonClickListener {
       val date = Date(it)
-      var formatter = DateTimeFormatter.ofPattern("dd-MMMM-yyyy")
-      textDate.setText(date.toInstant().atZone(TimeZone.getDefault().toZoneId()).toLocalDate().format(formatter))
+      textDate.setText(customFormatter.formatDate(date))
       selectedDate = date
     }
   }
