@@ -1,9 +1,13 @@
-package com.dimastri.expensetracker
+package com.dimastri.expensetracker.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
+import com.dimastri.expensetracker.FragmentCategory
+import com.dimastri.expensetracker.FragmentExpenses
+import com.dimastri.expensetracker.FragmentHome
+import com.dimastri.expensetracker.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomePageActivity : AppCompatActivity() {
