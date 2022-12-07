@@ -90,4 +90,8 @@ class SharedViewModel : ViewModel() {
     }
     return total
   }
+
+  fun getNumExpenses(): Int {
+    return _listExpense.value?.size ?: 0
+  }
 }
