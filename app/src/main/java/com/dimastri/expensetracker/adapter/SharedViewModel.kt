@@ -94,4 +94,16 @@ class SharedViewModel : ViewModel() {
   fun getNumExpenses(): Int {
     return _listExpense.value?.size ?: 0
   }
+
+  fun searchExpense(query: String): List<Expense> {
+    return _listExpense.value?.filter {
+      it.title.contains(query, true) || it.category.contains(query, true)
+    } ?: listOf()
+  }
+
+  fun searchCategory(query: String): List<Category> {
+    return _listCategory.value?.filter {
+      it.name.contains(query, true)
+    } ?: listOf()
+  }
 }

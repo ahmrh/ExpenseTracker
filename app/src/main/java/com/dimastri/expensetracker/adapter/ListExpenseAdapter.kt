@@ -12,6 +12,8 @@ import com.dimastri.expensetracker.tools.CustomFormatter
 
 class ListExpenseAdapter(var listExpense: LiveData<List<Expense>>): RecyclerView.Adapter<ListExpenseAdapter.ListExpenseViewHolder>() {
 
+    private var filterModel: List<Expense>? = listExpense.value
+
     inner class ListExpenseViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var tvTitle: TextView = itemView.findViewById(R.id.textTitle)
         var tvAmount: TextView = itemView.findViewById(R.id.textAmount)
@@ -34,5 +36,10 @@ class ListExpenseAdapter(var listExpense: LiveData<List<Expense>>): RecyclerView
 
     override fun getItemCount(): Int {
         return listExpense.value?.size!!
+    }
+
+    fun setFilter(model: List<Expense>) {
+        filterModel = model
+        notifyDataSetChanged()
     }
 }
