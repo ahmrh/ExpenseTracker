@@ -35,7 +35,7 @@
             android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="Expenses List"/>
+            app:title="Categories List"/>
 
 
       </androidx.constraintlayout.widget.ConstraintLayout>
