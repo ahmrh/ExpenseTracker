@@ -22,7 +22,6 @@ class AddExpenseActivity: AppCompatActivity() {
   lateinit var inputCategory: TextInputLayout
   lateinit var buttonSave: Button
   lateinit var selectedDate: Date
-  val customFormatter: CustomFormatter = CustomFormatter()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -47,7 +46,7 @@ class AddExpenseActivity: AppCompatActivity() {
     buttonSave.setOnClickListener {
       val data = Intent()
       data.putExtra("title", textTitle.text.toString())
-      data.putExtra("nominal", textNominal.text.toString())
+      data.putExtra("nominal", textNominal.text.toString().toLong())
       data.putExtra("category", inputCategory.editText?.text.toString())
       data.putExtra("date", selectedDate.time)
       setResult(RESULT_OK, data)
@@ -65,12 +64,12 @@ class AddExpenseActivity: AppCompatActivity() {
 
     datePicker.addOnPositiveButtonClickListener {
       val date = Date(it)
-      textDate.setText(customFormatter.formatDate(date))
+      textDate.setText(CustomFormatter().formatDate(date))
       selectedDate = date
     }
   }
 
-  fun populateCategory(items: Array<String>) {
+  private fun populateCategory(items: Array<String>) {
     (inputCategory.editText as MaterialAutoCompleteTextView).setSimpleItems(items)
   }
 }

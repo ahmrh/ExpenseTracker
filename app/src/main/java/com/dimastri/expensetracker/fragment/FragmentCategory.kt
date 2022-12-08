@@ -18,7 +18,7 @@ import com.dimastri.expensetracker.activity.AddCategoryActivity
 import com.dimastri.expensetracker.adapter.SharedViewModel
 import com.dimastri.expensetracker.adapter.ListCategoryAdapter
 
-class FragmentCategory () : Fragment(R.layout.fragment_category) {
+class FragmentCategory() : Fragment(R.layout.fragment_category) {
 
   private val sharedViedModel: SharedViewModel by activityViewModels()
 
@@ -36,15 +36,16 @@ class FragmentCategory () : Fragment(R.layout.fragment_category) {
     rvCategory.layoutManager = LinearLayoutManager(view.context)
 
     // Launcher for getting result from AddCategoryActivity Intent
-    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-      if (result.resultCode == Activity.RESULT_OK) {
-        val data: Intent? = result.data
-        val category = data?.getStringExtra("categoryName")
-        if (category != null) {
-          addCategory(category)
+    var resultLauncher =
+      registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+          val data: Intent? = result.data
+          val category = data?.getStringExtra("categoryName")
+          if (category != null) {
+            addCategory(category)
+          }
         }
       }
-    }
 
     btnAdd.setOnClickListener {
       val intent = Intent(view.context, AddCategoryActivity::class.java)
@@ -59,7 +60,7 @@ class FragmentCategory () : Fragment(R.layout.fragment_category) {
   }
 
 
-  fun addCategory(name: String) {
+  private fun addCategory(name: String) {
     val created = sharedViedModel.createNewCategory(name, R.drawable.ic_baseline_category_24, null)
     if (created) {
       Toast.makeText(context, "Category $name created", Toast.LENGTH_SHORT).show()

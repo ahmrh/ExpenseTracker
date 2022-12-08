@@ -7,7 +7,7 @@ import java.util.Date
 @Parcelize
 data class Expense(
   var title: String,
-  var nominal: Int,
+  var nominal: Long,
   var description: String?,
   var category: String,
   var date: Date

@@ -21,8 +21,8 @@ class SharedViewModel : ViewModel() {
     val listCategory = ArrayList<Category>()
     val listExpense = ArrayList<Expense>()
 
-    listCategory.add(Category("Food", R.drawable.ic_baseline_category_24, 0))
-    listCategory.add(Category("Transport", R.drawable.ic_baseline_category_24, 0))
+    listCategory.add(Category("Food", R.drawable.ic_baseline_category_24, 20000))
+    listCategory.add(Category("Transport", R.drawable.ic_baseline_category_24, 10000))
     listCategory.add(Category("Entertainment", R.drawable.ic_baseline_category_24, 0))
 
     listExpense.add(Expense("Buy Burger", 10000, "Buying Food", "Food", Date()))
@@ -33,7 +33,7 @@ class SharedViewModel : ViewModel() {
     _listExpense.value = listExpense
   }
 
-  fun createNewCategory(name: String, icon: Int?, count: Int?): Boolean {
+  fun createNewCategory(name: String, icon: Int?, count: Long?): Boolean {
     if (getCategoryByName(name) !== null) {
       return false
     }
@@ -47,7 +47,7 @@ class SharedViewModel : ViewModel() {
     return _listCategory.value?.find { it.name == name }
   }
 
-  fun createNewExpenses(title: String, nominal: Int, description: String?, category: String, date: Date) {
+  fun createNewExpenses(title: String, nominal: Long, description: String?, category: String, date: Date) {
     val ca = getCategoryByName(category)
 
     if (ca != null) {
@@ -63,16 +63,16 @@ class SharedViewModel : ViewModel() {
     _listCategory.value = _listCategory.value?.sortedByDescending { it.count }
   }
 
-  fun calculateTotalExpense(): Int {
-    var total = 0
+  fun calculateTotalExpense(): Long {
+    var total:Long = 0
     _listExpense.value?.forEach {
       total += it.nominal
     }
     return total
   }
 
-  fun calculateTotalExpenseThisWeek(): Int {
-    var total = 0
+  fun calculateTotalExpenseThisWeek(): Long {
+    var total:Long = 0
     _listExpense.value?.forEach {
       if (it.date.time > Date().time - 604800000) {
         total += it.nominal
@@ -81,8 +81,8 @@ class SharedViewModel : ViewModel() {
     return total
   }
 
-  fun calculateTotalExpenseThisMonth(): Int {
-    var total = 0
+  fun calculateTotalExpenseThisMonth(): Long {
+    var total:Long = 0
     _listExpense.value?.forEach {
       if (it.date.time > Date().time - 2629746000) {
         total += it.nominal

@@ -42,7 +42,7 @@ class FragmentExpenses () : Fragment(R.layout.fragment_expenses) {
 
         val title = data?.getStringExtra("title")
         val category = data?.getStringExtra("category")
-        val amount = data?.getIntExtra("nominal", -1)
+        val amount = data?.getLongExtra("nominal", -1)
         val date = data?.getLongExtra("date", -1)
         val selectedDate = Date(date!!)
 
@@ -66,7 +66,7 @@ class FragmentExpenses () : Fragment(R.layout.fragment_expenses) {
     return view
   }
 
-  fun addExpense(title: String, nominal: Int, category: String, date: Date) {
+  fun addExpense(title: String, nominal: Long, category: String, date: Date) {
     sharedViewModel.createNewExpenses(title, nominal, null, category, date)
     Toast.makeText(context, "Expense added", Toast.LENGTH_SHORT).show()
   }

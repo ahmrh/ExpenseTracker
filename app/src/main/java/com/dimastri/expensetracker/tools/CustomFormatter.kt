@@ -16,7 +16,7 @@ class CustomFormatter {
     return date.toInstant().atZone(TimeZone.getDefault().toZoneId()).toLocalDate().format(dateFormatter)
   }
 
-  fun formatCurrency(amount: Int): String {
+  fun formatCurrency(amount: Long): String {
     return currencyFormatter.format(amount)
   }
 }
