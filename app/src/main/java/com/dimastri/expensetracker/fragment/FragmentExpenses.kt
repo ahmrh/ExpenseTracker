@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -16,22 +17,31 @@ import com.dimastri.expensetracker.R
 import com.dimastri.expensetracker.activity.AddExpenseActivity
 import com.dimastri.expensetracker.adapter.ListExpenseAdapter
 import com.dimastri.expensetracker.adapter.SharedViewModel
+import com.google.android.material.appbar.MaterialToolbar
+import  io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.ObservableOnSubscribe
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.*
 
-class FragmentExpenses() : Fragment(R.layout.fragment_expenses), SearchView.OnQueryTextListener {
+class FragmentExpenses() :
+  Fragment(R.layout.fragment_expenses)/*, SearchView.OnQueryTextListener */ {
 
   lateinit var rvExpense: RecyclerView
   lateinit var listExpenseAdapter: ListExpenseAdapter
+  lateinit var subscription: CompositeDisposable
+  lateinit var searchView: SearchView
   private val sharedViewModel: SharedViewModel by activityViewModels()
 
   @SuppressLint("NotifyDataSetChanged")
   override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
+    inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
   ): View? {
     val view = inflater.inflate(R.layout.fragment_expenses, container, false)
     val btnAdd = view.findViewById<View>(R.id.buttonAddExpense)
+    searchView = view.findViewById<SearchView>(R.id.searchExpense)
 
     rvExpense = view.findViewById(R.id.list_expenses)
     listExpenseAdapter = ListExpenseAdapter(sharedViewModel.listExpense)
@@ -69,6 +79,40 @@ class FragmentExpenses() : Fragment(R.layout.fragment_expenses), SearchView.OnQu
       listExpenseAdapter.notifyDataSetChanged()
     }
 
+    // Observables
+    subscription = CompositeDisposable()
+
+    val observableSearch = Observable.create(ObservableOnSubscribe<String> { emitter ->
+      searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+          if (!emitter.isDisposed) {
+            if (query != null) {
+              emitter.onNext(query)
+            }
+          }
+          return false
+        }
+
+        override fun onQueryTextChange(query: String?): Boolean {
+          if (!emitter.isDisposed) {
+            if (query != null) {
+              emitter.onNext(query)
+            }
+          }
+          return false
+        }
+      })
+    }).distinctUntilChanged().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+
+    val subscriberSearch = observableSearch.subscribe { text ->
+      val item = sharedViewModel.searchExpense(text)
+
+
+      listExpenseAdapter.setFilter(item)
+    }
+
+    subscription.add(subscriberSearch)
+
     return view
   }
 
@@ -77,51 +121,39 @@ class FragmentExpenses() : Fragment(R.layout.fragment_expenses), SearchView.OnQu
     Toast.makeText(context, "Expense added", Toast.LENGTH_SHORT).show()
   }
 
-  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    inflater.inflate(R.menu.search_menu, menu)
-
-    val search = menu.findItem(R.id.item_search)
-    val searchView = search?.actionView as SearchView
-
-    Toast.makeText(context, "Search", Toast.LENGTH_SHORT).show()
-
-//    searchView.isSubmitButtonEnabled = true
-//    searchView.setOnQueryTextListener(this)
-    searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-      override fun onQueryTextSubmit(query: String?): Boolean {
-        if (query != null) {
-          Toast.makeText(context, "onQueryTextSubmit: $query", Toast.LENGTH_LONG).show()
-//          searchExpense(query)
-        }
-        return true
-      }
-
-      override fun onQueryTextChange(newText: String?): Boolean {
-        if (newText != null) {
-          Toast.makeText(context, "onQueryTextChange: $newText", Toast.LENGTH_LONG).show()
-//          searchExpense(newText)
-        }
-        return true
-      }
-    })
-
-    return super.onCreateOptionsMenu(menu, inflater)
-  }
-
-//  override fun onQueryTextSubmit(query: String?): Boolean {
-//    if (query != null) {
-//      val item = sharedViewModel.searchExpense(query)
-//      listExpenseAdapter.setFilter(item)
-//    }
-//    return true
-//  }
+//  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//    inflater.inflate(R.menu.search_menu, menu)
 //
-//  override fun onQueryTextChange(query: String?): Boolean {
-//    if (query != null) {
-//      Toast.makeText(context, "Your Search : $query", Toast.LENGTH_SHORT).show()
-//      val item = sharedViewModel.searchExpense(query)
-//      listExpenseAdapter.setFilter(item)
-//    }
-//    return true
+//    val searchItem = menu.findItem(R.id.item_search)
+//    val searchView = searchItem?.actionView as SearchView
+//
+//    searchView.isSubmitButtonEnabled = true
+//    searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//      override fun onQueryTextSubmit(query: String?): Boolean {
+//
+//        if (query != null) {
+//          Toast.makeText(context, "onQueryTextSubmit: $query", Toast.LENGTH_LONG).show()
+//          val item = sharedViewModel.searchExpense(query)
+//          listExpenseAdapter.setFilter(item)
+//        }
+//        return true
+//      }
+//
+//      override fun onQueryTextChange(query: String?): Boolean {
+//        if (query != null) {
+//          Toast.makeText(context, "onQueryTextChange: $query", Toast.LENGTH_LONG).show()
+//          val item = sharedViewModel.searchExpense(query)
+//          listExpenseAdapter.setFilter(item)
+//        }
+//        return true
+//      }
+//    })
+//
+//    return super.onCreateOptionsMenu(menu, inflater)
 //  }
+
+  override fun onDestroy() {
+    subscription.dispose()
+    super.onDestroy()
+  }
 }

@@ -13,9 +13,11 @@ import kotlin.collections.ArrayList
 class SharedViewModel : ViewModel() {
   private var _listCategory = MutableLiveData<List<Category>>()
   private var _listExpense = MutableLiveData<List<Expense>>()
+  private var _listFilteredExpense = MutableLiveData<List<Expense>>()
 
   val listCategory: LiveData<List<Category>> = _listCategory
   val listExpense: LiveData<List<Expense>> = _listExpense
+  val listFilteredExpense: LiveData<List<Expense>> = _listFilteredExpense
 
   init {
     val listCategory = ArrayList<Category>()
@@ -95,15 +97,18 @@ class SharedViewModel : ViewModel() {
     return _listExpense.value?.size ?: 0
   }
 
-  fun searchExpense(query: String): List<Expense> {
-    return _listExpense.value?.filter {
-      it.title.contains(query, true) || it.category.contains(query, true)
+  fun searchExpense(query: String): LiveData<List<Expense>> {
+    if (query == "") return listExpense
+
+    val listExpense = ArrayList<Expense>()
+
+    val res = _listExpense.value?.filter {
+      it.title.lowercase().contains(query, true) || it.category.lowercase().contains(query, true)
     } ?: listOf()
+
+    listExpense.addAll(res)
+    _listFilteredExpense.value = listExpense
+    return listFilteredExpense
   }
 
-  fun searchCategory(query: String): List<Category> {
-    return _listCategory.value?.filter {
-      it.name.contains(query, true)
-    } ?: listOf()
-  }
 }
