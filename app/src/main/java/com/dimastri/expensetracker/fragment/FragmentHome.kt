@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.dimastri.expensetracker.R
 import com.dimastri.expensetracker.adapter.SharedViewModel
+import com.dimastri.expensetracker.tools.CustomFormatter
 
 class FragmentHome () : Fragment(R.layout.fragment_home) {
   lateinit var textTotalSpending: TextView
@@ -39,10 +40,12 @@ class FragmentHome () : Fragment(R.layout.fragment_home) {
   }
 
   fun setStatistics() {
-    val totalSpending = sharedViewModel.calculateTotalExpense()
-    val totalSpendingThisMonth = sharedViewModel.calculateTotalExpenseThisMonth()
-    val totalSpendingThisWeek = sharedViewModel.calculateTotalExpenseThisWeek()
-    val numExpenses = sharedViewModel.getNumExpenses()
+    val customFormatter = CustomFormatter()
+    val totalSpending = customFormatter.formatCurrency(sharedViewModel.calculateTotalExpense())
+    val totalSpendingThisMonth = customFormatter.formatCurrency(sharedViewModel.calculateTotalExpenseThisMonth())
+    val totalSpendingThisWeek = customFormatter.formatCurrency(sharedViewModel.calculateTotalExpenseThisWeek())
+    val itemCount = sharedViewModel.getNumExpenses()
+    val numExpenses = "$itemCount items"
 
     textTotalSpending.text = totalSpending.toString()
     textStats1.text = totalSpendingThisMonth.toString()

@@ -23,13 +23,13 @@ class SharedViewModel : ViewModel() {
     val listCategory = ArrayList<Category>()
     val listExpense = ArrayList<Expense>()
 
-    listCategory.add(Category("Food", R.drawable.ic_baseline_category_24, 20000))
-    listCategory.add(Category("Transport", R.drawable.ic_baseline_category_24, 10000))
-    listCategory.add(Category("Entertainment", R.drawable.ic_baseline_category_24, 0))
+    listCategory.add(Category("Food", R.drawable.ic_baseline_category_24, 11000))
+    listCategory.add(Category("Transport", R.drawable.ic_baseline_category_24, 50000))
+    listCategory.add(Category("Entertainment", R.drawable.ic_baseline_category_24, 40000))
 
-    listExpense.add(Expense("Buy Burger", 10000, "Buying Food", "Food", Date()))
-    listExpense.add(Expense("Buy Burger", 10000, "Buying Food", "Food", Date()))
-    listExpense.add(Expense("Train Ticket", 10000, "Buying Train Ticket", "Transport", Date()))
+    listExpense.add(Expense("Beli Nasi Goreng", 11000, "Buying Food", "Food", Date()))
+    listExpense.add(Expense("Beli Tiket Film", 40000, "Buying Food", "Food", Date()))
+    listExpense.add(Expense("Beli Bensin", 50000, "Buying Train Ticket", "Transport", Date()))
 
     _listCategory.value = listCategory
     _listExpense.value = listExpense
