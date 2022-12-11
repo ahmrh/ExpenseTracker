@@ -11,4 +11,4 @@ data class Expense(
   var description: String?,
   var category: String,
   var date: Date
-):Parcelable
+) : Parcelable

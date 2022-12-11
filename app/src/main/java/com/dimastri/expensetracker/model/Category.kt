@@ -8,4 +8,4 @@ data class Category(
   var name: String,
   var image: Int,
   var count: Long,
-): Parcelable
+) : Parcelable

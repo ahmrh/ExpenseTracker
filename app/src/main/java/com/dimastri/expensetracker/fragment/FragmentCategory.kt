@@ -1,11 +1,13 @@
 package com.dimastri.expensetracker.fragment
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -20,18 +22,25 @@ import com.dimastri.expensetracker.adapter.ListCategoryAdapter
 
 class FragmentCategory() : Fragment(R.layout.fragment_category) {
 
+  lateinit var btnAdd: Button
+  lateinit var rvCategory: RecyclerView
+  lateinit var listCategoryAdapter: ListCategoryAdapter
   private val sharedViedModel: SharedViewModel by activityViewModels()
 
+  @SuppressLint("NotifyDataSetChanged")
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
     val view = inflater.inflate(R.layout.fragment_category, container, false)
-    val btnAdd = view.findViewById<View>(R.id.btnAddCategory)
 
-    val rvCategory: RecyclerView = view.findViewById<RecyclerView>(R.id.list_category)
-    val listCategoryAdapter = ListCategoryAdapter(sharedViedModel.listCategory)
+    // find view
+    btnAdd = view.findViewById<Button>(R.id.btnAddCategory)
+    rvCategory = view.findViewById<RecyclerView>(R.id.list_category)
+
+    // setting up recycler view
+    listCategoryAdapter = ListCategoryAdapter(sharedViedModel.listCategory)
     rvCategory.adapter = listCategoryAdapter
     rvCategory.layoutManager = LinearLayoutManager(view.context)
 
@@ -47,11 +56,13 @@ class FragmentCategory() : Fragment(R.layout.fragment_category) {
         }
       }
 
+    // set listener for button for adding category
     btnAdd.setOnClickListener {
       val intent = Intent(view.context, AddCategoryActivity::class.java)
       resultLauncher.launch(intent)
     }
 
+    // observe data change to update recycler view
     sharedViedModel.listCategory.observe(viewLifecycleOwner, Observer {
       listCategoryAdapter.notifyDataSetChanged()
     })
@@ -59,7 +70,7 @@ class FragmentCategory() : Fragment(R.layout.fragment_category) {
     return view
   }
 
-
+  // function for adding category
   private fun addCategory(name: String) {
     val created = sharedViedModel.createNewCategory(name, R.drawable.ic_baseline_category_24, null)
     if (created) {

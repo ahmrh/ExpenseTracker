@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import android.widget.Toast
 import android.widget.Toolbar
 import androidx.activity.result.contract.ActivityResultContracts
@@ -33,6 +34,8 @@ class FragmentExpenses() :
   lateinit var listExpenseAdapter: ListExpenseAdapter
   lateinit var subscription: CompositeDisposable
   lateinit var searchView: SearchView
+  lateinit var btnAdd: Button
+
   private val sharedViewModel: SharedViewModel by activityViewModels()
 
   @SuppressLint("NotifyDataSetChanged")
@@ -40,10 +43,13 @@ class FragmentExpenses() :
     inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
   ): View? {
     val view = inflater.inflate(R.layout.fragment_expenses, container, false)
-    val btnAdd = view.findViewById<View>(R.id.buttonAddExpense)
-    searchView = view.findViewById<SearchView>(R.id.searchExpense)
 
+    // find view
+    btnAdd = view.findViewById<Button>(R.id.buttonAddExpense)
+    searchView = view.findViewById<SearchView>(R.id.searchExpense)
     rvExpense = view.findViewById(R.id.list_expenses)
+
+    // setting up recycler view
     listExpenseAdapter = ListExpenseAdapter(sharedViewModel.listExpense)
     rvExpense.adapter = listExpenseAdapter
     rvExpense.layoutManager = LinearLayoutManager(view.context)
@@ -66,7 +72,7 @@ class FragmentExpenses() :
         }
       }
 
-    // Add expense button
+    // listener for add expense button
     btnAdd.setOnClickListener {
       val intent = Intent(view.context, AddExpenseActivity::class.java)
       val listCategory = sharedViewModel.listCategory.value?.map { it.name }?.toTypedArray()
@@ -82,6 +88,7 @@ class FragmentExpenses() :
     // Observables
     subscription = CompositeDisposable()
 
+    // create observables for search view, emitting text change
     val observableSearch = Observable.create(ObservableOnSubscribe<String> { emitter ->
       searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
@@ -104,18 +111,19 @@ class FragmentExpenses() :
       })
     }).distinctUntilChanged().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
+    // add subscriber to search view observables to filter the list
     val subscriberSearch = observableSearch.subscribe { text ->
       val item = sharedViewModel.searchExpense(text)
-
-
       listExpenseAdapter.setFilter(item)
     }
 
+    // add to composite disposable
     subscription.add(subscriberSearch)
 
     return view
   }
 
+  // add expense to list
   private fun addExpense(title: String, nominal: Long, category: String, date: Date) {
     sharedViewModel.createNewExpenses(title, nominal, null, category, date)
     Toast.makeText(context, "Expense added", Toast.LENGTH_SHORT).show()

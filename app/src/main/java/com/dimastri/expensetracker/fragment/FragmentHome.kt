@@ -11,7 +11,7 @@ import com.dimastri.expensetracker.R
 import com.dimastri.expensetracker.adapter.SharedViewModel
 import com.dimastri.expensetracker.tools.CustomFormatter
 
-class FragmentHome () : Fragment(R.layout.fragment_home) {
+class FragmentHome() : Fragment(R.layout.fragment_home) {
   lateinit var textTotalSpending: TextView
   lateinit var textStats1: TextView
   lateinit var textStats2: TextView
@@ -26,24 +26,31 @@ class FragmentHome () : Fragment(R.layout.fragment_home) {
   ): View? {
     val view = inflater.inflate(R.layout.fragment_home, container, false)
 
+    // find view
     textTotalSpending = view.findViewById(R.id.textTotalSpent)
     textStats1 = view.findViewById(R.id.textStats1)
     textStats2 = view.findViewById(R.id.textStats2)
     textStats3 = view.findViewById(R.id.textStats3)
 
+    // set stats
     setStatistics()
 
+    // observe data change
     sharedViewModel.listExpense.observe(viewLifecycleOwner) {
       setStatistics()
     }
+
     return view
   }
 
   fun setStatistics() {
+    // set Statistics
     val customFormatter = CustomFormatter()
     val totalSpending = customFormatter.formatCurrency(sharedViewModel.calculateTotalExpense())
-    val totalSpendingThisMonth = customFormatter.formatCurrency(sharedViewModel.calculateTotalExpenseThisMonth())
-    val totalSpendingThisWeek = customFormatter.formatCurrency(sharedViewModel.calculateTotalExpenseThisWeek())
+    val totalSpendingThisMonth =
+      customFormatter.formatCurrency(sharedViewModel.calculateTotalExpenseThisMonth())
+    val totalSpendingThisWeek =
+      customFormatter.formatCurrency(sharedViewModel.calculateTotalExpenseThisWeek())
     val itemCount = sharedViewModel.getNumExpenses()
     val numExpenses = "$itemCount items"
 

@@ -49,7 +49,13 @@ class SharedViewModel : ViewModel() {
     return _listCategory.value?.find { it.name == name }
   }
 
-  fun createNewExpenses(title: String, nominal: Long, description: String?, category: String, date: Date) {
+  fun createNewExpenses(
+    title: String,
+    nominal: Long,
+    description: String?,
+    category: String,
+    date: Date
+  ) {
     val ca = getCategoryByName(category)
 
     if (ca != null) {
@@ -66,7 +72,7 @@ class SharedViewModel : ViewModel() {
   }
 
   fun calculateTotalExpense(): Long {
-    var total:Long = 0
+    var total: Long = 0
     _listExpense.value?.forEach {
       total += it.nominal
     }
@@ -74,7 +80,7 @@ class SharedViewModel : ViewModel() {
   }
 
   fun calculateTotalExpenseThisWeek(): Long {
-    var total:Long = 0
+    var total: Long = 0
     _listExpense.value?.forEach {
       if (it.date.time > Date().time - 604800000) {
         total += it.nominal
@@ -84,7 +90,7 @@ class SharedViewModel : ViewModel() {
   }
 
   fun calculateTotalExpenseThisMonth(): Long {
-    var total:Long = 0
+    var total: Long = 0
     _listExpense.value?.forEach {
       if (it.date.time > Date().time - 2629746000) {
         total += it.nominal
