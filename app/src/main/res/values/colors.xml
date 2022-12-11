@@ -12,6 +12,7 @@
   <color name="primary">#006685</color>
   <color name="onPrimary">#FFFFFF</color>
   <color name="primaryContainer">#BFE9FF</color>
+  <color name="lighterPrimaryContainer">#dbf3ff</color>
   <color name="onPrimaryContainer">#001F2A</color>
 
   <color name="secondary">#2F6B26</color>

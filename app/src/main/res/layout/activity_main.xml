@@ -22,9 +22,8 @@
     android:id="@+id/bottomNavigationView"
     style="@style/Widget.MaterialComponents.BottomNavigationView"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="wrap_content"
     app:elevation="8dp"
-    app:itemActiveIndicatorStyle="@null"
     app:itemPaddingBottom="10dp"
     app:itemPaddingTop="8dp"
     app:menu="@menu/botton_nav_menu" />

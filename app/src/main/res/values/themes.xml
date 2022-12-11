@@ -5,16 +5,32 @@
     <item name="colorPrimary">@color/primaryContainer</item>
     <item name="colorPrimaryVariant">@color/primary</item>
     <item name="colorOnPrimary">@color/onPrimaryContainer</item>
+
     <!-- Secondary brand color. -->
     <item name="colorSecondary">@color/secondary</item>
     <item name="colorSecondaryVariant">@color/secondaryContainer</item>
     <item name="colorOnSecondary">@color/onSecondary</item>
+
     <!-- Status bar color. -->
     <item name="android:statusBarColor">?attr/colorPrimary</item>
+
     <!-- Customize your theme here. -->
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
+
+    <!--  Botton app bar  -->
+    <item name="colorSurface">@color/lighterPrimaryContainer</item>
+    <item name="colorOnSurfaceVariant">@color/primary</item>
   </style>
 
   <style name="Theme.ExpenseTracker" parent="Base.Theme.ExpenseTracker" />
+
+  <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+    <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+  </style>
+
+  <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+    <item name="colorSurface">@color/lighterPrimaryContainer</item>
+    <item name="colorOnSurfaceVariant">@color/primary</item>
+  </style>
 </resources>
