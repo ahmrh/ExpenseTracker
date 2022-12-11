@@ -19,10 +19,11 @@ import com.dimastri.expensetracker.R
 import com.dimastri.expensetracker.activity.AddCategoryActivity
 import com.dimastri.expensetracker.adapter.SharedViewModel
 import com.dimastri.expensetracker.adapter.ListCategoryAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class FragmentCategory() : Fragment(R.layout.fragment_category) {
 
-  lateinit var btnAdd: Button
+  lateinit var btnAdd: FloatingActionButton
   lateinit var rvCategory: RecyclerView
   lateinit var listCategoryAdapter: ListCategoryAdapter
   private val sharedViedModel: SharedViewModel by activityViewModels()
@@ -36,8 +37,8 @@ class FragmentCategory() : Fragment(R.layout.fragment_category) {
     val view = inflater.inflate(R.layout.fragment_category, container, false)
 
     // find view
-    btnAdd = view.findViewById<Button>(R.id.btnAddCategory)
-    rvCategory = view.findViewById<RecyclerView>(R.id.list_category)
+    btnAdd = view.findViewById(R.id.btnAddCategory)
+    rvCategory = view.findViewById(R.id.list_category)
 
     // setting up recycler view
     listCategoryAdapter = ListCategoryAdapter(sharedViedModel.listCategory)

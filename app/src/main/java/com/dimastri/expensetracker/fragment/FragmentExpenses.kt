@@ -19,6 +19,7 @@ import com.dimastri.expensetracker.activity.AddExpenseActivity
 import com.dimastri.expensetracker.adapter.ListExpenseAdapter
 import com.dimastri.expensetracker.adapter.SharedViewModel
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import  io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.ObservableOnSubscribe
@@ -34,7 +35,7 @@ class FragmentExpenses() :
   lateinit var listExpenseAdapter: ListExpenseAdapter
   lateinit var subscription: CompositeDisposable
   lateinit var searchView: SearchView
-  lateinit var btnAdd: Button
+  lateinit var btnAdd: FloatingActionButton
 
   private val sharedViewModel: SharedViewModel by activityViewModels()
 
@@ -45,8 +46,8 @@ class FragmentExpenses() :
     val view = inflater.inflate(R.layout.fragment_expenses, container, false)
 
     // find view
-    btnAdd = view.findViewById<Button>(R.id.buttonAddExpense)
-    searchView = view.findViewById<SearchView>(R.id.searchExpense)
+    btnAdd = view.findViewById(R.id.buttonAddExpense)
+    searchView = view.findViewById(R.id.searchExpense)
     rvExpense = view.findViewById(R.id.list_expenses)
 
     // setting up recycler view
